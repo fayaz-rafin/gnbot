@@ -7,7 +7,9 @@ public class Main extends ListenerAdapter {
     private  int stars = 0;
 
     public static void main(String[] args) {
-        String TOKEN="";
+        private Dotenv env = new Dotenv.load();// Environment variable holder
+
+        String TOKEN= env.get("TOKEN");
         jdaBuilder = JDABuilder.createDefault(TOKEN);// string toke
 
         jdaBuilder.setStatus(OnlineStatus.ONLINE);
