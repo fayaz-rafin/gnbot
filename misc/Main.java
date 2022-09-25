@@ -9,6 +9,7 @@ public class Main extends ListenerAdapter {
     public static void main(String[] args) {
         private Dotenv env = new Dotenv.load();// Environment variable holder
 
+        System.out.println(env.get("TOKEN"));
         String TOKEN= env.get("TOKEN");
         jdaBuilder = JDABuilder.createDefault(TOKEN);// string toke
 
