@@ -2,9 +2,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -20,48 +18,18 @@ public class Loader {
         this.path = path;
     }
 
-    class User {
-        public int stars;
-        public int gnCount;
-        public String name;
-
-        User(String name, int gn, int stars){
-            this.name = name;
-            gnCount = gn;
-            this.stars = stars;
-        }
-    }
-
-    public int gn(String name, int gn){
-        User user = getUser(name);
-        if(user == null)
-            user = new User(name, 0, 0);
-        user.gnCount += gn;
-        setUser(name, user);
-        return user.gnCount;
-    }
-
-    public int stars(String name, int stars) {
-        User user = getUser(name);
-        if(user == null)
-            user = new User(name, 0, 0);
-        user.stars += stars;
-        setUser(name, user);
-        return user.stars;
-    }
-
-    private User getUser(String name){
-        HashMap<String, User> data = gson.fromJson(read(), new TypeToken<HashMap<String, User>>(){}.getType());
+    public UserHandler.User getUser(String name){
+        HashMap<String, UserHandler.User> data = gson.fromJson(read(), new TypeToken<HashMap<String, UserHandler.User>>(){}.getType());
         if(data == null)
             return null;
 
         return data.get(name);
     }
 
-    private void setUser(String name,User user){
-        HashMap<String, User> data = gson.fromJson(read(), new TypeToken<HashMap<String, User>>(){}.getType());
+    public void setUser(String name, UserHandler.User user){
+        HashMap<String, UserHandler.User> data = gson.fromJson(read(), new TypeToken<HashMap<String, UserHandler.User>>(){}.getType());
         if (data == null)
-            data = new HashMap<String, User>();
+            data = new HashMap<String, UserHandler.User>();
         data.put(name, user);
         String json = gson.toJson(data);
         write(json);
